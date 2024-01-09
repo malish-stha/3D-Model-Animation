@@ -7,13 +7,22 @@ Source: https://sketchfab.com/3d-models/snow-dragon-46771d960d91450cac0f2f0e746f
 Title: Snow Dragon
 */
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 export function Dragon(props) {
+  const { animation } = props;
   const group = useRef();
   const { nodes, materials, animations } = useGLTF("models/Dragon.glb");
   const { actions } = useAnimations(animations, group);
+
+  useEffect(() => {
+    actions[animation].reset().fadeIn(0.5).play();
+    return () => {
+      actions[animation].reset().fadeOut(0.5);
+    };
+  }, [animation]);
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">
