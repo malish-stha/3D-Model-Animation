@@ -1,7 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import { Dragon } from "./Dragon";
 import { useControls } from "leva";
-// import { House } from "./House";
 
 export const Experience = () => {
   const { animation } = useControls({
@@ -10,10 +9,11 @@ export const Experience = () => {
       options: ["run", "skill01", "skill02"],
     },
   });
+
   return (
     <>
       {/* <OrbitControls /> */}
-      {/* <House /> */}
+
       <group position-y={-1}>
         <Dragon animation={animation} />
       </group>

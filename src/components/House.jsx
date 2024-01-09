@@ -9,8 +9,10 @@ Title: Forest House
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
+import houseScene from "../models/house.glb";
+
 export function House(props) {
-  const { nodes, materials } = useGLTF("models/house.glb");
+  const { nodes, materials } = useGLTF(houseScene);
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0}>
@@ -441,4 +443,4 @@ export function House(props) {
   );
 }
 
-useGLTF.preload("models/house.glb");
+useGLTF.preload(houseScene);
