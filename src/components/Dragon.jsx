@@ -19,7 +19,7 @@ export function Dragon(props) {
   useEffect(() => {
     actions[animation].reset().fadeIn(0.5).play();
     return () => {
-      actions[animation].reset().fadeOut(0.5);
+      actions[animation].stop();
     };
   }, [animation]);
 
