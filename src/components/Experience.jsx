@@ -1,72 +1,10 @@
-// import { motion } from "framer-motion-3d";
-// import { useEffect, useState } from "react";
-// import { useFrame } from "@react-three/fiber";
-// import { animate, useMotionValue } from "framer-motion";
-// import { useScroll } from "@react-three/drei";
-// import { Dragon } from "./Dragon";
-
-// export const Experience = (props) => {
-//   const { menuOpened } = props;
-//   const data = useScroll();
-
-//   const [section, setSection] = useState(0);
-
-//   const cameraPositionX = menuOpened ? -5 : 0;
-//   const cameraLookAtX = menuOpened ? 5 : 0;
-
-//   const [characterAnimation, setCharacterAnimation] = useState("run");
-
-//   useEffect(() => {
-//     setTimeout(() => {
-//       if (section === 0) {
-//         setCharacterAnimation("run");
-//       } else if (section === 1) {
-//         setCharacterAnimation("skill01");
-//       } else if (section === 2) {
-//         setCharacterAnimation("skill02");
-//       } else if (section === 3) {
-//         setCharacterAnimation("deaddown");
-//       }
-//     }, 100);
-//   }, [section]);
-
-//   useFrame((state) => {
-//     let curSection = Math.floor(data.scroll.current * data.pages);
-
-//     if (curSection > 3) {
-//       curSection = 3;
-//     }
-
-//     if (curSection !== section) {
-//       setSection(curSection);
-//     }
-
-//     state.camera.position.x = cameraPositionX;
-//     state.camera.lookAt(cameraLookAtX, 0, 0);
-//   });
-
-//   return (
-//     <>
-//       <ambientLight intensity={1} />
-
-//       <motion.group
-//         position={[0.1, 0.1, 2]}
-//         scale={menuOpened ? [1.5, 1.5, 1.5] : [0.9, 0.9, 0.9]}
-//         rotation-y={-Math.PI / 4}
-//       >
-//         <Dragon animation={characterAnimation} />
-//       </motion.group>
-//     </>
-//   );
-// };
-
 import React, { useEffect, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
 import { animate, useMotionValue } from "framer-motion";
 import { motion } from "framer-motion-3d";
 import { Dragon } from "./Dragon";
-import { framerMotionConfig } from "../config"; // Assuming your config file is named "config.js"
+import { framerMotionConfig } from "../config";
 
 export const Experience = (props) => {
   const { menuOpened } = props;
@@ -85,11 +23,11 @@ export const Experience = (props) => {
       if (section === 0) {
         setCharacterAnimation("run");
       } else if (section === 1) {
-        setCharacterAnimation("skill01");
+        setCharacterAnimation("run");
       } else if (section === 2) {
-        setCharacterAnimation("skill02");
+        setCharacterAnimation("stand");
       } else if (section === 3) {
-        setCharacterAnimation("deaddown");
+        setCharacterAnimation("stand");
       }
     }, 100);
 
@@ -132,6 +70,25 @@ export const Experience = (props) => {
         position={[0.1, 0.1, 2]}
         scale={menuOpened ? [1, 1, 1] : [0.9, 0.9, 0.9]}
         rotation-y={-Math.PI / 4}
+        animate={"" + section}
+        transition={{
+          duration: 0.6,
+        }}
+        variants={{
+          0: {
+            rotateX: menuOpened ? -0.2 : -1,
+            rotateZ: -0.2,
+          },
+          1: {
+            scaleX: 2,
+            scaleY: 2,
+            scaleZ: 2,
+            x: 0.5,
+            y: -0.2,
+
+            rotateX: 0.1,
+          },
+        }}
       >
         <Dragon animation={characterAnimation} />
       </motion.group>

@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 
 const Section = (props) => {
@@ -160,7 +159,7 @@ const SkillSection = () => {
 const ProjectSection = () => {
   return (
     <Section>
-      <h1>Projects</h1>
+      <div></div>
     </Section>
   );
 };

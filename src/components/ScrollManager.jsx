@@ -15,7 +15,7 @@ export const ScrollManager = (props) => {
 
   useEffect(() => {
     gsap.to(data.el, {
-      duration: 1,
+      duration: 0.8,
       scrollTop: section * data.el.clientHeight,
       onStart: () => {
         isAnimating.current = true;
@@ -24,6 +24,38 @@ export const ScrollManager = (props) => {
         isAnimating.current = false;
       },
     });
+  }, [section]);
+
+  useEffect(() => {
+    if (section === 1) {
+      // Logic for section 1 to section 2 transition
+      gsap.to(data.el, {
+        duration: 0.8,
+        scrollTop: section * data.el.clientHeight,
+        onStart: () => {
+          isAnimating.current = true;
+        },
+        onComplete: () => {
+          isAnimating.current = false;
+        },
+      });
+    }
+  }, [section]);
+
+  useEffect(() => {
+    if (section === 2) {
+      // Logic for section 2 to section 3 transition
+      gsap.to(data.el, {
+        duration: 0.8,
+        scrollTop: section * data.el.clientHeight,
+        onStart: () => {
+          isAnimating.current = true;
+        },
+        onComplete: () => {
+          isAnimating.current = false;
+        },
+      });
+    }
   }, [section]);
 
   useFrame(() => {
