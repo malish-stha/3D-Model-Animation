@@ -6,6 +6,7 @@ import Menu from "./components/Menu";
 import { useEffect, useState } from "react";
 import { Leva } from "leva";
 import { ScrollManager } from "./components/ScrollManager";
+import { Cursor } from "./components/Cursor";
 
 function App() {
   const [section, setSection] = useState(0);
@@ -34,6 +35,7 @@ function App() {
         menuOpened={menuOpened}
         setMenuOpened={setMenuOpened}
       />
+      <Cursor />
       <Leva hidden />
     </>
   );
