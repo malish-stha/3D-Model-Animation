@@ -1,15 +1,20 @@
-import { Dragon } from "./Dragon";
 import { motion } from "framer-motion-3d";
 import { useEffect, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
+import { Dragon } from "./Dragon";
 
 export const Experience = (props) => {
+  const { menuOpened } = props;
   const data = useScroll();
 
   const [section, setSection] = useState(0);
 
+  const cameraPositionX = menuOpened ? -5 : 0;
+  const cameraLookAtX = menuOpened ? 5 : 0;
+
   const [characterAnimation, setCharacterAnimation] = useState("run");
+
   useEffect(() => {
     setTimeout(() => {
       if (section === 0) {
@@ -24,7 +29,7 @@ export const Experience = (props) => {
     }, 100);
   }, [section]);
 
-  useFrame(() => {
+  useFrame((state) => {
     let curSection = Math.floor(data.scroll.current * data.pages);
 
     if (curSection > 3) {
@@ -34,6 +39,9 @@ export const Experience = (props) => {
     if (curSection !== section) {
       setSection(curSection);
     }
+
+    state.camera.position.x = cameraPositionX;
+    state.camera.lookAt(cameraLookAtX, 0, 0);
   });
 
   return (
@@ -42,7 +50,7 @@ export const Experience = (props) => {
 
       <motion.group
         position={[0.1, 0.1, 2]}
-        scale={[0.9, 0.9, 0.9]}
+        scale={menuOpened ? [1.5, 1.5, 1.5] : [0.9, 0.9, 0.9]}
         rotation-y={-Math.PI / 4}
       >
         <Dragon animation={characterAnimation} />
