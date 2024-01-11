@@ -1,12 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
 import { animate, useMotionValue } from "framer-motion";
 import { motion } from "framer-motion-3d";
 import { Dragon } from "./Dragon";
 import { framerMotionConfig } from "../config";
+const Island = lazy(() => import("./Island"));
 
 export const Experience = (props) => {
+  const [isRotating, setIsRotating] = useState(false);
+  const [currentStage, setCurrentStage] = useState(1);
+
+  const adjustIslandForScreenSize = () => {
+    let screenScale, screenPosition;
+    let islandRotation = [0.4, 0, 0];
+
+    if (window.innerWidth < 768) {
+      screenScale = [0.9, 0.9, 0.9];
+      screenPosition = [0, -5.5, -43.4];
+    } else {
+      screenScale = [0.5, 0.5, 0.5];
+
+      screenPosition = [-3, 8, -55];
+    }
+    return [screenScale, screenPosition, islandRotation];
+  };
+
+  const [islandScale, islandPosition, islandRotation] =
+    adjustIslandForScreenSize();
   const { menuOpened } = props;
   const data = useScroll();
 
@@ -66,6 +87,14 @@ export const Experience = (props) => {
   return (
     <>
       <ambientLight intensity={1} />
+
+      <hemisphereLight
+        skyColor="#b1e1ff"
+        groundColor="#000000"
+        intensity={4}
+        position={[0, 50, 0]}
+      />
+
       <motion.group
         position={[0.1, 0.1, 2]}
         scale={menuOpened ? [1, 1, 1] : [0.9, 0.9, 0.9]}
@@ -76,21 +105,40 @@ export const Experience = (props) => {
         }}
         variants={{
           0: {
+            y: -0.2,
             rotateX: menuOpened ? -0.2 : -1,
-            rotateZ: -0.2,
+            rotateY: 1.4,
+            rotateZ: 1,
           },
           1: {
-            scaleX: 2,
-            scaleY: 2,
-            scaleZ: 2,
-            x: 0.5,
-            y: -0.2,
+            scaleX: 4,
+            scaleY: 4,
+            scaleZ: 4,
+            x: 1,
+            y: -3,
 
             rotateX: 0.1,
           },
         }}
       >
         <Dragon animation={characterAnimation} />
+      </motion.group>
+      <motion.group
+        animate={"" + section}
+        transition={{
+          duration: 0.6,
+        }}
+      >
+        {section === 0 && (
+          <Island
+            scale={islandScale}
+            position={[1, 8, -50]}
+            rotation={islandRotation}
+            isRotating={isRotating}
+            setIsRotating={setIsRotating}
+            setCurrentStage={setCurrentStage}
+          />
+        )}
       </motion.group>
     </>
   );

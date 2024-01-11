@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Leva } from "leva";
 import { ScrollManager } from "./components/ScrollManager";
 import { Cursor } from "./components/Cursor";
+import Sky from "./components/Sky";
 
 function App() {
   const [section, setSection] = useState(0);
@@ -18,11 +19,11 @@ function App() {
 
   return (
     <>
-      <Canvas shadows camera={{ position: [0, 2, 5], fov: 30 }}>
+      <Canvas>
         <color attach="background" args={["#ececec"]} />
         <ScrollControls pages={4} damping={0.1}>
           <ScrollManager section={section} onSectionChange={setSection} />
-
+          <Sky />
           <Experience section={section} menuOpened={menuOpened} />
 
           <Scroll html>

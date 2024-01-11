@@ -159,7 +159,7 @@ const SkillSection = () => {
 const ProjectSection = () => {
   return (
     <Section>
-      <div></div>
+      <div>Projects</div>
     </Section>
   );
 };
